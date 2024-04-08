@@ -98,16 +98,6 @@ EVP_CIPHER_CTX* Crypto::initializeOrThrow(MODE mode) {
         throw CipherError{_("Error initializing cipher")};
     }
 
-    success = EVP_CIPHER_CTX_set_key_length(context, _key->keySize());
-    if (success != SSL_SUCCESS) {
-        destroyContext(context);
-        char msg[YAPET::Consts::EXCEPTION_MESSAGE_BUFFER_SIZE];
-        std::snprintf(msg, YAPET::Consts::EXCEPTION_MESSAGE_BUFFER_SIZE,
-                      _("Cannot set key length on context to %d"),
-                      _key->keySize());
-        throw CipherError{msg};
-    }
-
     return context;
 }
 
